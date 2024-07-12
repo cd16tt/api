@@ -1,0 +1,87 @@
+services:
+    node:
+        build:
+            context: .
+            dockerfile: docker/node/Dockerfile
+        image: cd16tt-api/node:1.0
+        container_name: dev_comitett16_api_node
+        entrypoint: 'tail -f /dev/null'
+        labels:
+            caddy: api.comitett16.aaa
+            caddy.tls: internal
+            caddy.reverse_proxy: '{{upstreams 3333}}'
+        networks:
+            - default
+            - global_reverse_proxy
+        restart: unless-stopped
+        volumes:
+            - ./:/home/node/app
+        working_dir: /home/node/app
+
+    database:
+        build:
+            context: .
+            dockerfile: docker/postgres/Dockerfile
+        container_name: dev_comitett16_api_database
+        image: cd16tt-api/postgres:1.0
+        env_file:
+            - path: .env
+              required: true
+        networks:
+            - default
+        restart: unless-stopped
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+
+    database_test:
+        image: cd16tt-api/postgres:1.0
+        container_name: dev_comitett16_api_database_test
+        depends_on:
+            - database
+        env_file:
+            - path: .env.test
+              required: true
+        networks:
+            - default
+        restart: unless-stopped
+        volumes:
+            - postgres_test_data:/var/lib/postgresql/data
+
+    adminer:
+        container_name: dev_comitett16_api_adminer
+        depends_on:
+            - database
+            - database_test
+        image: adminer:4.8.1
+        labels:
+            caddy: db.comitett16.aaa
+            caddy.tls: internal
+            caddy.reverse_proxy: '{{upstreams 8080}}'
+        networks:
+            - default
+            - global_reverse_proxy
+        restart: unless-stopped
+
+    mailer:
+        container_name: dev_comitett16_api_mailer
+        image: maildev/maildev:2.1.0
+        labels:
+            caddy: mail.comitett16.aaa
+            caddy.tls: internal
+            caddy.reverse_proxy: '{{upstreams 1080}}'
+        networks:
+            - default
+            - global_reverse_proxy
+        restart: unless-stopped
+
+networks:
+    default:
+        driver: bridge
+    global_reverse_proxy:
+        external: true
+
+volumes:
+    postgres_data:
+        name: dev_comitett16_api_postgres
+    postgres_test_data:
+        name: dev_comitett16_api_postgres_test
