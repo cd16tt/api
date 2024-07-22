@@ -5,6 +5,8 @@ server.errorHandler(() => import('#shared/exceptions/handler'));
 
 server.use([
 	() => import('#shared/middlewares/container_bindings_middleware'),
+	() => import('#shared/middlewares/force_json_response_middleware'),
+	() => import('@adonisjs/cors/cors_middleware'),
 	() => import('@adonisjs/static/static_middleware'),
 	() => import('@adonisjs/cors/cors_middleware'),
 ]);
