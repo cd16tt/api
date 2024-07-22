@@ -20,6 +20,7 @@ export default class LoginController extends AbstractController {
 
 		return response.json({
 			uid: user.uid,
+			permissions: user.permissions,
 		});
 	}
 }
