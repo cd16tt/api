@@ -11,7 +11,7 @@ export const http = defineConfig({
 	allowMethodSpoofing: false,
 	useAsyncLocalStorage: true,
 	cookie: {
-		domain: '',
+		domain: env.get('SESSION_DOMAIN'),
 		path: '/',
 		maxAge: '2h',
 		httpOnly: true,

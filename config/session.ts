@@ -5,7 +5,7 @@ import env from '#start/env';
 
 const sessionConfig = defineConfig({
 	enabled: true,
-	cookieName: 'adonis-session',
+	cookieName: env.get('SESSION_NAME') ?? 'adonis-session',
 	clearWithBrowser: false,
 	age: '2h',
 	cookie: {
@@ -13,6 +13,7 @@ const sessionConfig = defineConfig({
 		httpOnly: true,
 		secure: app.inProduction,
 		sameSite: 'lax',
+		domain: env.get('SESSION_DOMAIN'),
 	},
 	store: env.get('SESSION_DRIVER'),
 	stores: {

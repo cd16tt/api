@@ -10,6 +10,8 @@ export default await Env.create(new URL('../', import.meta.url), {
 	HOST: Env.schema.string({ format: 'host' }),
 	LOG_LEVEL: Env.schema.string(),
 	// Session configuration
+	SESSION_NAME: Env.schema.string.optional(),
+	SESSION_DOMAIN: Env.schema.string(),
 	SESSION_DRIVER: Env.schema.enum(['cookie', 'memory'] as const),
 	// Database configuration
 	POSTGRES_HOST: Env.schema.string(),
