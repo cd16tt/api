@@ -55,8 +55,8 @@ export class SessionKyselyUserProvider implements SessionWithTokensUserProviderC
 			expiresAt: transientToken.expiresAt,
 			tokenableId: user.id,
 			secret: transientToken.secret,
-			createdAt: token.createdAt.toJSDate(),
-			updatedAt: token.updatedAt.toJSDate(),
+			createdAt: token.createdAt,
+			updatedAt: token.updatedAt,
 		});
 	}
 
@@ -78,9 +78,9 @@ export class SessionKyselyUserProvider implements SessionWithTokensUserProviderC
 			identifier: token.uid,
 			hash: token.hash,
 			tokenableId: token.tokenableId,
-			expiresAt: date(token.expiresAt).toJSDate(),
-			createdAt: token.createdAt.toJSDate(),
-			updatedAt: token.updatedAt.toJSDate(),
+			expiresAt: token.expiresAt,
+			createdAt: token.createdAt,
+			updatedAt: token.updatedAt,
 		});
 
 		const tokenIsVerified = rememberMeToken.verify(decodedToken.secret);

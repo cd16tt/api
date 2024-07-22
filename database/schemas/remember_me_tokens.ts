@@ -21,7 +21,6 @@ export const RememberMeTokensSchema = {
 				// Indices
 				.addPrimaryKeyConstraint(`${this.$tableName}_pkey`, ['id'])
 				.addUniqueConstraint(`${this.$tableName}_uid_unique`, ['uid'])
-				.addUniqueConstraint(`${this.$tableName}_user_id_unique`, ['tokenable_id'])
 				.addUniqueConstraint(`${this.$tableName}_hash_unique`, ['hash'])
 				// Build query
 				.execute()

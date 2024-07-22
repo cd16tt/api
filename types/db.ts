@@ -1,5 +1,4 @@
 import type { ColumnType, Insertable, Selectable, Updateable } from 'kysely';
-import type { DateTime } from 'luxon';
 
 import type { Permission } from '#domains/auth/value_objects/security';
 import type { Uid } from '#shared/services/uid_generator';
@@ -7,7 +6,7 @@ import type { Uid } from '#shared/services/uid_generator';
 export type Generated<T> =
 	T extends ColumnType<infer S, infer I, infer U> ? ColumnType<S, I | undefined, U> : ColumnType<T, T | undefined, T>;
 
-export type Timestamp = ColumnType<DateTime, string, string>;
+export type Timestamp = ColumnType<Date, string, string>;
 
 export declare namespace Address {
 	export interface Table {
