@@ -7,7 +7,7 @@ const uidMatcher = { match: uidRegex };
 
 const LoginController = () => import('#domains/auth/controllers/login_controller');
 const LogoutController = () => import('#domains/auth/controllers/logout_controller');
-const MeController = () => import('#domains/auth/controllers/me_controller');
+const CheckLoginController = () => import('#domains/auth/controllers/check_login_controller');
 const CreateInvitationController = () => import('#domains/invitation/controllers/create_invitation_controller');
 const AcceptInvitationController = () => import('#domains/invitation/controllers/accept_invitation_controller');
 
@@ -19,7 +19,7 @@ router.group(() => {
 router
 	.group(() => {
 		router.post('/auth/logout', [LogoutController]).as('auth.logout');
-		router.get('/auth/me', [MeController]).as('auth.me');
+		router.get('/auth/check', [CheckLoginController]).as('auth.check');
 
 		router.post('/invite', [CreateInvitationController]).as('invite.create');
 	})
