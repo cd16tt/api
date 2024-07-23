@@ -10,7 +10,8 @@ import sonarjs from 'eslint-plugin-sonarjs';
 import eslintComments from '@eslint-community/eslint-plugin-eslint-comments/configs';
 import eslintPluginN from 'eslint-plugin-n';
 import eslintConfigPrettier from 'eslint-config-prettier';
-import eslintPluginNoUseExtendNative from 'eslint-plugin-no-use-extend-native/index.js';
+import eslintPluginNoUseExtendNative from 'eslint-plugin-no-use-extend-native';
+import pluginPromise from 'eslint-plugin-promise';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -128,6 +129,9 @@ const noUseExtendNative = [
 	},
 ];
 
+/** @see https://github.com/eslint-community/eslint-plugin-promise */
+const promise = [pluginPromise.configs['flat/recommended']];
+
 /** @type {import('@typescript-eslint/utils').TSESLint.FlatConfig.ConfigFile} */
 export default [
 	/* Ignores files globally. */
@@ -146,12 +150,10 @@ export default [
 
 	/**
 	 * Older configurations that has not been migrated to flat config yet.
-	 * @see https://github.com/eslint-community/eslint-plugin-promise
 	 * @see https://github.com/un-ts/eslint-plugin-import-x
 	 */
 	...compat.config({
-		plugins: ['promise'],
-		extends: ['plugin:promise/recommended', 'plugin:import-x/recommended', 'plugin:import-x/typescript'],
+		extends: ['plugin:import-x/recommended', 'plugin:import-x/typescript'],
 		rules: {
 			'import-x/no-unresolved': 'off',
 			'import-x/namespace': 'off',
@@ -200,6 +202,7 @@ export default [
 	...comments,
 	...noUseExtendNative,
 	...node,
+	...promise,
 	...prettier,
 
 	/* Specific for ESLint itself. */
