@@ -18,10 +18,10 @@
 		"#config/*": "./config/*.js",
 		"#database/*": "./database/*.js",
 		"#domains/*": "./domains/*.js",
-		"#root/*": "./*",
 		"#shared/*": "./shared/*.js",
 		"#start/*": "./start/*.js",
 		"#tests/*": "./tests/*.js",
+		"#tmp/*": "./tmp/*",
 		"#types/*": "./types/*.js"
 	},
 	"devDependencies": {

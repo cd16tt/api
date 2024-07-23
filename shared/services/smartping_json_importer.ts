@@ -10,9 +10,9 @@ import ClubSocialRepository from '#domains/club/repositories/club_social_reposit
 import HallRepository from '#domains/club/repositories/hall_repository';
 import ClubLicenseeRepository from '#domains/licensee/repositories/club_licensee_repository';
 import LicenseeRepository from '#domains/licensee/repositories/licensee_repository';
-import clubs from '#root/tmp/clubs.json' assert { type: 'json' };
-import licensees from '#root/tmp/licensees.json' assert { type: 'json' };
 import { date } from '#shared/services/date_factory';
+import clubs from '#tmp/clubs.json' assert { type: 'json' };
+import licensees from '#tmp/licensees.json' assert { type: 'json' };
 
 type JsonClub = {
 	club: ReturnType<SmartpingClub['serialize']>;
@@ -101,8 +101,8 @@ export default class SmartpingJsonImporterService {
 				seasonId: seasonId,
 				name: club.name,
 				validatedAt: club.validatedAt
-					? DateTime.fromFormat('dd/LL/yyyy', club.validatedAt).toSQL() ?? date().toSQL()
-					: DateTime.fromFormat('dd/LL/yyyy', '01/07/2024').toSQL() ?? date().toSQL(),
+					? (DateTime.fromFormat('dd/LL/yyyy', club.validatedAt).toSQL() ?? date().toSQL())
+					: (DateTime.fromFormat('dd/LL/yyyy', '01/07/2024').toSQL() ?? date().toSQL()),
 			})
 			.returning('id');
 
