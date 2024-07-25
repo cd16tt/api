@@ -17,7 +17,9 @@ export default class CheckLoginController extends AbstractController {
 			.selectTakeFirst('firstname', 'lastname', 'code');
 
 		if (!licensee) {
-			return response.unauthorized();
+			return response.unauthorized({
+				errors: [{ message: 'Aucun licencié associé à cet utilisateur.' }],
+			});
 		}
 
 		return response.json({
