@@ -296,6 +296,7 @@ export declare namespace User {
 		password: string;
 		permissions: Generated<Array<Permission>>;
 		licenseeId: number;
+		resetPasswordToken: Uid | null;
 		createdAt: Timestamp;
 		updatedAt: Timestamp;
 		createdById: number | null;

@@ -14,6 +14,7 @@ export const UsersSchema = {
 				.addColumn('username', 'varchar', (col) => col.notNull())
 				.addColumn('password', 'varchar', (col) => col.notNull())
 				.addColumn('permissions', sql`varchar[]`, (col) => col.notNull().defaultTo(sql`'{}'`))
+				.addColumn('reset_password_token', 'char(20)', (col) => col.defaultTo(null))
 				.addColumn('created_at', 'timestamp', (col) => col.notNull())
 				.addColumn('updated_at', 'timestamp', (col) => col.notNull())
 				// Indices
