@@ -1,4 +1,3 @@
-import hash from '@adonisjs/core/services/hash';
 import { Transaction } from 'kysely';
 
 import AbstractRepository, { SelectColumn, SelectValue } from '#shared/repositories/abstract_repository';
@@ -11,6 +10,14 @@ type CreateUserDTO = Omit<User.Create, CommonFields>;
 type UpdateUserDTO = Omit<User.Update, CommonFields>;
 
 export default class UserRepository extends AbstractRepository {
+	get query() {
+		return {
+			select: (transaction?: Transaction<DB>) => this.$selectQuery({ table: 'users', transaction }),
+			update: (transaction?: Transaction<DB>) => this.$updateQuery({ table: 'users', transaction }),
+			delete: (transaction?: Transaction<DB>) => this.$deleteQuery({ table: 'users', transaction }),
+		};
+	}
+
 	get(id: number, transaction?: Transaction<DB>) {
 		return this.$findBy({
 			table: 'users',
@@ -30,13 +37,12 @@ export default class UserRepository extends AbstractRepository {
 		});
 	}
 
-	async create(payload: CreateUserDTO, transaction?: Transaction<DB>) {
+	create(payload: CreateUserDTO, transaction?: Transaction<DB>) {
 		return this.$create({
 			table: 'users',
 			payload: {
 				uid: generateUid(),
 				...payload,
-				password: await hash.make(payload.password),
 				createdAt: date().toSQL(),
 				updatedAt: date().toSQL(),
 			},
@@ -44,7 +50,7 @@ export default class UserRepository extends AbstractRepository {
 		});
 	}
 
-	async update<Col extends SelectColumn<'users'>>(
+	update<Col extends SelectColumn<'users'>>(
 		where: ReadonlyArray<[Col, SelectValue<'users', Col>]>,
 		payload: UpdateUserDTO,
 		transaction?: Transaction<DB>,
@@ -52,9 +58,7 @@ export default class UserRepository extends AbstractRepository {
 		return this.$update({
 			table: 'users',
 			where,
-			payload: payload.password
-				? { ...payload, password: await hash.make(payload.password), updatedAt: date().toSQL() }
-				: { ...payload, updatedAt: date().toSQL() },
+			payload: { ...payload, updatedAt: date().toSQL() },
 			transaction,
 		});
 	}

@@ -1,3 +1,4 @@
+import hash from '@adonisjs/core/services/hash';
 import { ApplicationService } from '@adonisjs/core/types';
 
 import UserRepository from '#domains/auth/repositories/user_repository';
@@ -14,13 +15,15 @@ export const UserSeeder = {
 			throw new Error('Admin licensee not found');
 		}
 
-		const user = await userRepository.create({
-			licenseeId: adminLicensee.id,
-			password: 'password',
-			permissions: ['*'],
-			username: 'user_admin',
-		});
+		const hashedPassword = await hash.make('password');
 
-		await user.returning('id');
+		await userRepository
+			.create({
+				licenseeId: adminLicensee.id,
+				password: hashedPassword,
+				permissions: ['*'],
+				username: 'user_admin',
+			})
+			.returning();
 	},
 };

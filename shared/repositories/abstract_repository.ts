@@ -49,6 +49,18 @@ export type DeleteReturn<T extends Table> = SelectExpression<DB, ExtractTableAli
 export default abstract class AbstractRepository {
 	constructor(protected readonly db: Database) {}
 
+	protected $selectQuery<T extends Table>({ table, transaction }: { table: T; transaction?: Transaction<DB> | undefined }) {
+		return (transaction ?? this.db.client).selectFrom(table);
+	}
+
+	protected $updateQuery<T extends Table>({ table, transaction }: { table: T; transaction?: Transaction<DB> | undefined }) {
+		return (transaction ?? this.db.client).updateTable(table);
+	}
+
+	protected $deleteQuery<T extends Table>({ table, transaction }: { table: T; transaction?: Transaction<DB> | undefined }) {
+		return (transaction ?? this.db.client).deleteFrom(table);
+	}
+
 	protected $findAll<T extends Table>({ table, transaction }: { table: T; transaction?: Transaction<DB> | undefined }) {
 		const query = (transaction ?? this.db.client).selectFrom(table);
 

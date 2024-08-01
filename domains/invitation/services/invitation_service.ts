@@ -1,4 +1,5 @@
 import { inject } from '@adonisjs/core';
+import hash from '@adonisjs/core/services/hash';
 
 import UndefinedLicenseeEmailException from '#domains/auth/exceptions/undefined_licensee_email';
 import UserAlreadyExistsException from '#domains/auth/exceptions/user_already_exists';
@@ -42,7 +43,7 @@ export default class InvitationService {
 	}
 
 	async accept({ invitation, licenseeEmail, payload }: ActionParameters) {
-		if (invitation.expiresAt < date()) {
+		if (date(invitation.expiresAt) < date()) {
 			throw new InvitationExpiredException();
 		}
 
@@ -50,11 +51,15 @@ export default class InvitationService {
 			throw new UndefinedLicenseeEmailException();
 		}
 
-		const user = await this.userRepository.create({
-			...invitation,
-			username: payload.username,
-			password: payload.password.release(),
-		});
+		const hashedPassword = await hash.make(payload.password.release());
+
+		const user = await this.userRepository
+			.create({
+				...invitation,
+				username: payload.username,
+				password: hashedPassword,
+			})
+			.returningAll();
 
 		await this.invitationRepository.delete([['id', invitation.id]]).returning('id');
 
