@@ -8,11 +8,18 @@ const uidMatcher = { match: uidRegex };
 const LoginController = () => import('#domains/auth/controllers/login_controller');
 const LogoutController = () => import('#domains/auth/controllers/logout_controller');
 const CheckLoginController = () => import('#domains/auth/controllers/check_login_controller');
+const ForgotPasswordController = () => import('#domains/auth/controllers/forgot_password_controller');
+const ValidateResetPasswordRequestController = () =>
+	import('#domains/auth/controllers/validate_reset_password_request_controller');
+const ResetPasswordController = () => import('#domains/auth/controllers/reset_password_controller');
 const CreateInvitationController = () => import('#domains/invitation/controllers/create_invitation_controller');
 const AcceptInvitationController = () => import('#domains/invitation/controllers/accept_invitation_controller');
 
 router.group(() => {
 	router.post('/auth/login', [LoginController]).as('auth.login');
+	router.post('/auth/forgot-password', [ForgotPasswordController]).as('auth.forgot_password');
+	router.get('/auth/reset-password/:token', [ValidateResetPasswordRequestController]).as('auth.validate_reset_password_request');
+	router.post('/auth/reset-password/:token', [ResetPasswordController]).as('auth.reset_password');
 	router.post('/invite/:uuid', [AcceptInvitationController]).where('uid', uidMatcher).as('invite.accept');
 });
 
