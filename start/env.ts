@@ -9,6 +9,8 @@ export default await Env.create(new URL('../', import.meta.url), {
 	APP_KEY: Env.schema.string(),
 	HOST: Env.schema.string({ format: 'host' }),
 	LOG_LEVEL: Env.schema.string(),
+	PUBLIC_URL: Env.schema.string(),
+	FRONTEND_URL: Env.schema.string(),
 	// Session configuration
 	SESSION_NAME: Env.schema.string.optional(),
 	SESSION_DOMAIN: Env.schema.string(),
