@@ -25,8 +25,8 @@ export default class ResetPasswordController extends AbstractController {
 		const hashedPassword = await hash.make(payload.password);
 
 		const updatedUser = await this.userRepository
-			.update([['reset_password_token', params['token']]], {
-				reset_password_token: null,
+			.update([['resetPasswordToken', params['token']]], {
+				resetPasswordToken: null,
 				password: hashedPassword,
 			})
 			.returning('uid');
