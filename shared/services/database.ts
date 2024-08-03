@@ -4,7 +4,7 @@ import pg from 'pg';
 import env from '#start/env';
 import type { DB } from '#types/db';
 
-const db = new Kysely<DB>({
+export const db = new Kysely<DB>({
 	dialect: new PostgresDialect({
 		pool: new pg.Pool({
 			host: env.get('POSTGRES_HOST'),

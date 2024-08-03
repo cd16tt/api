@@ -13,6 +13,15 @@ export const SchemaFactory = {
 
 		return compiledSchema;
 	},
+	createWithMetadata<Metadata extends Record<string, unknown>>() {
+		return <S extends SchemaTypes>(schema: S, messages?: ValidationMessages) => {
+			const compiledSchema = vine.withMetaData<Metadata>().compile(schema);
+
+			compiledSchema.messagesProvider = new SimpleMessagesProvider(Object.assign(defaultMessages, messages ?? {}));
+
+			return compiledSchema;
+		};
+	},
 };
 
 export type InferSchema<T extends VineValidator<SchemaTypes, Record<string, string>>> = Infer<T>;

@@ -3,9 +3,7 @@
 	"compilerOptions": {
 		"target": "ESNext",
 		"module": "NodeNext",
-		"lib": [
-			"ESNext"
-		],
+		"lib": ["ESNext"],
 		// Disable emitting comments
 		"removeComments": true,
 		// Allow 'import x from y' when a module doesn't have a default export
@@ -73,37 +71,16 @@
 		"rootDir": "./",
 		"outDir": "./build",
 		"paths": {
-			"#config/*": [
-				"./config/*.js"
-			],
-			"#database/*": [
-				"./database/*.js"
-			],
-			"#domains/*": [
-				"./domains/*.js"
-			],
-			"#shared/*": [
-				"./shared/*.js"
-			],
-			"#start/*": [
-				"./start/*.js"
-			],
-			"#tests/*": [
-				"./tests/*.js"
-			],
-			"#tmp/*": [
-				"./tmp/*"
-			],
-			"#types/*": [
-				"./types/*.js"
-			]
+			"#config/*": ["./config/*.js"],
+			"#database/*": ["./database/*.js"],
+			"#domains/*": ["./domains/*.js"],
+			"#shared/*": ["./shared/*.js"],
+			"#start/*": ["./start/*.js"],
+			"#tests/*": ["./tests/*.js"],
+			"#tmp/*": ["./tmp/*"],
+			"#types/*": ["./types/*.js"]
 		},
-		"types": [
-			"@types/node"
-		]
+		"types": ["@types/node"]
 	},
-	"exclude": [
-		"node_modules",
-		"build"
-	]
+	"exclude": ["node_modules", "build"]
 }
