@@ -34,7 +34,7 @@ export default class ForgotPasswordController extends AbstractController {
 		}
 
 		const resetToken = generateUid();
-		await this.userRepository.update([['uid', account.uid]], { reset_password_token: resetToken }).execute();
+		await this.userRepository.update([['uid', account.uid]], { resetPasswordToken: resetToken }).execute();
 
 		const resetLink = router
 			.builder()
