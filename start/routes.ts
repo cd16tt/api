@@ -14,6 +14,7 @@ const ValidateResetPasswordRequestController = () =>
 	import('#domains/auth/controllers/validate_reset_password_request_controller');
 const ResetPasswordController = () => import('#domains/auth/controllers/reset_password_controller');
 const UpdatePasswordController = () => import('#domains/auth/controllers/update_password_controller');
+const UpdateUsernameController = () => import('#domains/auth/controllers/update_username_controller');
 
 // Invitation
 const CreateInvitationController = () => import('#domains/invitation/controllers/create_invitation_controller');
@@ -32,6 +33,7 @@ router
 		router.post('/auth/logout', [LogoutController]).as('auth.logout');
 		router.get('/auth/check', [CheckLoginController]).as('auth.check');
 		router.patch('/auth/password', [UpdatePasswordController]).as('auth.update_password');
+		router.patch('/auth/username', [UpdateUsernameController]).as('auth.update_username');
 
 		router.post('/invite', [CreateInvitationController]).as('invite.create');
 	})

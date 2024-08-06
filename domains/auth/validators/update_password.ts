@@ -9,8 +9,5 @@ export const updatePasswordSchema = SchemaFactory.createWithMetadata<{ userId: n
 		oldPassword: vine.string().use(isCurrentPassword()),
 		newPassword: vine.string().use(isSafePassword()),
 	}),
-	{
-		'username.regex': 'Le numéro de licence doit être un nombre.',
-		'email.email': "L'adresse e-mail doit être valide.",
-	},
+	{},
 );
